@@ -1,11 +1,9 @@
 import React from 'react'
-import Map from "./components/Map/Map";
+import Map from "../Map/Map";
 
 const Body =()=> {
   return (
-    <div>
-        <Map/>
-    </div>
+    <Map/>
   )
 }
 

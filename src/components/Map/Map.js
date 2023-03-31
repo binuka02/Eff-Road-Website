@@ -2,8 +2,11 @@ import React from 'react'
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 
 const containerStyle = {
-  width: '400px',
-  height: '400px'
+  width: 'auto',
+  height: '600px',
+  marginLeft : '150px',
+  marginRight : '150px'
+
 };
 
 const center = {
@@ -38,9 +41,10 @@ function Map() {
       }}
         mapContainerStyle={containerStyle}
         center={center}
-        zoom={10}
+        zoom={1000}
         onLoad={onLoad}
         onUnmount={onUnmount}
+        className="mw-100"
       >
         { /* Child components, such as markers, info windows, etc. */ }
         <></>
