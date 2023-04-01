@@ -5,13 +5,14 @@ const containerStyle = {
   width: 'auto',
   height: '600px',
   marginLeft : '150px',
-  marginRight : '150px'
+  marginRight : '150px',
+  borderRadius:'25px'
 
 };
 
 const center = {
-  lat: -3.745,
-  lng: -38.523
+  lat: 6.8649,
+  lng: 79.8997
 };
 
 function Map() {
@@ -19,7 +20,8 @@ function Map() {
     id: 'google-map-script',
     googleMapsApiKey: "AIzaSyBkbxNlUBuctIYho47igu3H3w-JDTwsH7w"
   })
-
+  
+  // eslint-disable-next-line no-unused-vars
   const [map, setMap] = React.useState(null)
 
   const onLoad = React.useCallback(function callback(map) {
@@ -41,7 +43,7 @@ function Map() {
       }}
         mapContainerStyle={containerStyle}
         center={center}
-        zoom={1000}
+        
         onLoad={onLoad}
         onUnmount={onUnmount}
         className="mw-100"
