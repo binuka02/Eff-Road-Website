@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
-import { socket } from '../../socket/socket';
+import { socket } from '../socket/socket';
 
 const containerStyle = {
   width: 'auto',
@@ -93,7 +93,7 @@ function Map() {
               lng:location.lng
             }}
             icon={{
-              url:require(`../../assets/featureImages/${location.feature}.png`),
+              url:require(`../assets/featureImages/${location.feature}.png`),
               scaledSize: new window.google.maps.Size(40, 40), // scaled
               
             }}
