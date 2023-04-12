@@ -31,6 +31,25 @@ function Map() {
     getFeatureLocations()
   },[])
 
+  React.useLayoutEffect(() => {
+    socket.on("clearLocation",({id})=>{
+    console.log(id);
+    const locations = featureLocations.filter((location)=>{
+        console.log("location id",location.id===id);
+        return location.id !== id
+    });
+    // console.log("newLocations after delete",locations);
+    setFeatureLocations(locations);
+    })
+
+   
+
+    
+    return () => {
+        socket.off("clearLocation");
+    }
+}, [featureLocations]);
+
   useEffect(()=>{
     socket.on("locationAdded",(data)=>{
       console.log(data);
@@ -52,7 +71,7 @@ function Map() {
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: "AIzaSyBkbxNlUBuctIYho47igu3H3w-JDTwsH7w"
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY
   })
   
   // eslint-disable-next-line no-unused-vars
