@@ -1,6 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
 import { socket } from '../socket/socket';
+import usePlacesAutocomplete, {
+  getGeocode,
+  getLatLng,
+} from "use-places-autocomplete";
+import {
+  Combobox,
+  ComboboxInput,
+  ComboboxPopover,
+  ComboboxList,
+  ComboboxOption,
+} from "@reach/combobox";
+import "@reach/combobox/styles.css";
+
 
 const containerStyle = {
   width: 'auto',
@@ -11,12 +24,30 @@ const containerStyle = {
 
 };
 
-const center = {
-  lat: 6.8649,
-  lng: 79.8997
-};
 
-function Map() {
+
+
+
+function Map({selected}) {
+
+  console.log(selected)
+
+  const [latitude,setLat]=useState(null)
+  const [longitude,setLng]=useState(null)
+  // const [selected, setSelected] = useState(null);
+
+  useEffect(()=>{
+    navigator.geolocation.getCurrentPosition(function(position) {
+      setLat(position.coords.latitude);
+      setLng(position.coords.longitude);
+    })
+  },[])
+  
+  console.log(latitude,longitude)
+  const center = {
+    lat: +latitude,
+    lng: +longitude
+  };
 
   const [featureLocations,setFeatureLocations] = useState([])
 
@@ -90,19 +121,26 @@ function Map() {
   }, [])
 
   return isLoaded ? (
+    <>
+      
+      
+
       <GoogleMap
       options={{
         mapId:'57d6ea8aeff0c423'
       }}
         mapContainerStyle={containerStyle}
-        center={center}
+        center={{
+          lat:+latitude || 6.8780032,
+          lng:+longitude || 79.9408128
+        }}
         
         onLoad={onLoad}
         onUnmount={onUnmount}
         className="mw-100"
       >
         { /* Child components, such as markers, info windows, etc. */ }
-        <>
+        
         {featureLocations.map((location)=>{
           return(
             <Marker
@@ -120,9 +158,13 @@ function Map() {
             />
           )
         })}
-        </>
+        {selected && <Marker position={selected}/>}
       </GoogleMap>
+
+      </>
   ) : <></>
 }
+
+
 
 export default React.memo(Map)
